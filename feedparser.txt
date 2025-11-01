@@ -1,0 +1,6 @@
+feedparser
+openai
+python-telegram-bot
+schedule
+flask
+requests
