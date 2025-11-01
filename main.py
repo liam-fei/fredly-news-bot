@@ -224,23 +224,25 @@ def run_daily_briefing():
         traceback.print_exc()
 
 # ---------------- SCHEDULER ----------------
-
-# Dubai time is UTC+4. Convert 07:00 Dubai to UTC = 03:00 UTC
 schedule.every().day.at("03:00").do(run_daily_briefing)
+
 # ========== 启动 Flask + 首次运行 + 定时循环 ==========
 from keep_alive import keep_alive
-keep_alive()  # 绑定 Render PORT，防休眠
+keep_alive()
 
-# 部署时立即运行一次（测试 + 补播）
-print("首次启动，立即运行一次播报...")
-run_daily_briefing()
+# 启动信息（只打印一次）
+print("\n" + "="*60)
+print("Fredly Daily News Bot 已启动！")
+print("⏰ 每天迪拜时间 07:00 自动播报")
+print("🔄 后台运行中... (日志已静默)")
+print("="*60 + "\n")
 
-# 进入后台定时模式
-print('🤖 Fredly新闻播报机器人已启动')
-print('⏰ 定时任务：每天迪拜时间07:00自动推送')
-print('📡 RSS源：综合新闻、商业、科技、娱乐、体育')
-print('🔄 后台运行中，无需打开页签...\n')
+# 可选：测试时运行一次
+if os.getenv("RUN_ON_START", "false").lower() == "true":
+    print("测试模式：立即运行一次播报...")
+    run_daily_briefing()
 
+# 进入后台循环（不再 print）
 while True:
     schedule.run_pending()
     time.sleep(60)
