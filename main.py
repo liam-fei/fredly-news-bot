@@ -227,7 +227,15 @@ def run_daily_briefing():
 
 # Dubai time is UTC+4. Convert 07:00 Dubai to UTC = 03:00 UTC
 schedule.every().day.at("03:00").do(run_daily_briefing)
+# ========== 启动 Flask + 首次运行 + 定时循环 ==========
+from keep_alive import keep_alive
+keep_alive()  # 绑定 Render PORT，防休眠
 
+# 部署时立即运行一次（测试 + 补播）
+print("首次启动，立即运行一次播报...")
+run_daily_briefing()
+
+# 进入后台定时模式
 print('🤖 Fredly新闻播报机器人已启动')
 print('⏰ 定时任务：每天迪拜时间07:00自动推送')
 print('📡 RSS源：综合新闻、商业、科技、娱乐、体育')
