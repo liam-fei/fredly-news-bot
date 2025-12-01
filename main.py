@@ -95,7 +95,7 @@ def fetch_latest_articles():
 
 
 def build_prompt(entries):
-    prompt = f"""You are a professional radio news anchor delivering a {TARGET_MINUTES}-minute daily news briefing. 
+    prompt = f"""You are Sara, a professional English female news anchor delivering a {TARGET_MINUTES}-minute daily news briefing. Please start with: "Good morning, this is Sara with your Fredly Daily Briefing for {datetime.now().strftime('%B %d, %Y')}." 
 
 IMPORTANT INSTRUCTIONS:
 - DO NOT include transition sounds, music descriptions, or sound effects (like "transition sound", "upbeat music", etc.)
@@ -151,7 +151,7 @@ def generate_script(prompt):
 def generate_tts(script_text, out_path: Path):
     # Using OpenAI TTS endpoint (gpt-4o-mini-tts)
     headers = {'Authorization': f'Bearer {OPENAI_API_KEY}', 'Content-Type': 'application/json'}
-    payload = {'model': 'gpt-4o-mini-tts', 'voice': 'alloy', 'input': script_text}
+    payload = {'model': 'gpt-4o-mini-tts', 'voice': 'shimmer', 'input': script_text}
     r = requests.post('https://api.openai.com/v1/audio/speech', headers=headers, json=payload, stream=True)
     if r.status_code == 200:
         with open(out_path, 'wb') as f:
